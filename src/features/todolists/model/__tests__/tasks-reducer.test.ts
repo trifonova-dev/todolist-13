@@ -7,7 +7,7 @@ import {
   tasksReducer,
   type TasksState,
 } from "../tasks-slice"
-import { createTodolistTC, deleteTodolistAC } from "../todolists-slice"
+import { createTodolistAC, deleteTodolistAC } from "../todolists-slice"
 
 let startState: TasksState = {}
 
@@ -79,7 +79,7 @@ test("correct task should change its title", () => {
 })
 
 test("array should be created for new todolist", () => {
-  const endState = tasksReducer(startState, createTodolistTC("New todolist"))
+  const endState = tasksReducer(startState, createTodolistAC("New todolist"))
 
   const keys = Object.keys(endState)
   const newKey = keys.find((k) => k !== "todolistId1" && k !== "todolistId2")
