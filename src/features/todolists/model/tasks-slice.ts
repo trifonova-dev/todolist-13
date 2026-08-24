@@ -12,6 +12,9 @@ export type TasksState = Record<string, Task[]>
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState: {} as TasksState,
+  selectors: {
+    selectTasks: (state) => state,
+  },
   reducers: (create) => ({
     deleteTaskAC: create.reducer<{ todolistId: string; taskId: string }>((state, action) => {
       const tasks = state[action.payload.todolistId]
@@ -50,3 +53,4 @@ export const tasksSlice = createSlice({
 
 export const { changeTaskTitleAC, createTaskAC, changeTaskStatusAC, deleteTaskAC } = tasksSlice.actions
 export const tasksReducer = tasksSlice.reducer
+export const { selectTasks } = tasksSlice.selectors
