@@ -13,7 +13,7 @@ export const Tasks = ({ todolist }: Props) => {
 
   const tasks = useAppSelector(selectTasks)
 
-  const todolistTasks = tasks[id] || []
+  const todolistTasks = tasks[id]
   let filteredTasks = todolistTasks
   if (filter === "active") {
     filteredTasks = todolistTasks.filter((task) => !task.isDone)
