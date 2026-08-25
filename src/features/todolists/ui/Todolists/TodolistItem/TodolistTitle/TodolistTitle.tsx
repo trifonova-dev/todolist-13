@@ -4,6 +4,7 @@ import {
   changeTodolistsTitleTC,
   changeTodolistTitleAC,
   deleteTodolistAC,
+  deleteTodolistTC,
   type Todolist,
 } from "@/features/todolists/model/todolists-slice"
 import DeleteIcon from "@mui/icons-material/Delete"
@@ -20,7 +21,7 @@ export const TodolistTitle = ({ todolist }: Props) => {
   const dispatch = useAppDispatch()
 
   const deleteTodolist = () => {
-    dispatch(deleteTodolistAC({ id }))
+    dispatch(deleteTodolistTC({ id }))
   }
 
   const changeTodolistTitle = (title: string) => {
