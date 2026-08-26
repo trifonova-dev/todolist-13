@@ -12,8 +12,8 @@ export type TasksState = Record<string, Task[]>
 export const tasksSlice = createSlice({
   name: "tasks",
   initialState: {} as TasksState,
-  selectors:{
-    selectTasks:(state)=>state
+  selectors: {
+    selectTasks: (state) => state,
   },
   reducers: (create) => ({
     deleteTaskAC: create.reducer<{ todolistId: string; taskId: string }>((state, action) => {
@@ -40,6 +40,14 @@ export const tasksSlice = createSlice({
         payload: { title, id: nanoid(), todolistId },
       }),
       (state, action) => {
+        // console.log("action.payload:", action.payload)
+        // console.log("state:", state)
+        // console.log("todolistId:", action.payload.todolistId)
+
+        if (!state[action.payload.todolistId]) {
+          state[action.payload.todolistId] = []
+        }
+
         const newTask = {
           id: action.payload.id,
           title: action.payload.title,
@@ -60,6 +68,6 @@ export const tasksSlice = createSlice({
   },
 })
 
-export const {createTaskAC,deleteTaskAC,changeTaskTitleAC,changeTaskStatusAC} = tasksSlice.actions
+export const { createTaskAC, deleteTaskAC, changeTaskTitleAC, changeTaskStatusAC } = tasksSlice.actions
 export const tasksReducer = tasksSlice.reducer
-export const {selectTasks} = tasksSlice.selectors
+export const { selectTasks } = tasksSlice.selectors
