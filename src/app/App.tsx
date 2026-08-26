@@ -7,6 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline"
 import { ThemeProvider } from "@mui/material/styles"
 import { selectThemeMode } from "@/app/app-slice"
 
+
 export const App = () => {
   const themeMode = useAppSelector(selectThemeMode)
 
