@@ -1,5 +1,5 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit"
-import { createTodolistTC, deleteTodolistTC } from "./todolists-slice"
+import { createAction, createReducer, createSlice, nanoid } from "@reduxjs/toolkit"
+import { createTodolistAC, deleteTodolistAC } from "./todolists-slice"
 
 export type Task = {
   id: string
@@ -36,38 +36,32 @@ export const tasksSlice = createSlice({
       }
     }),
     createTaskAC: create.preparedReducer(
-      ({ title, todolistId }) => ({
-        payload: { title, id: nanoid(), todolistId },
-      }),
-      (state, action) => {
-        // console.log("action.payload:", action.payload)
-        // console.log("state:", state)
-        // console.log("todolistId:", action.payload.todolistId)
-
-        if (!state[action.payload.todolistId]) {
-          state[action.payload.todolistId] = []
-        }
-
+      ({ title, todolistId }: { title: string; todolistId: string }) => {
         const newTask = {
-          id: action.payload.id,
-          title: action.payload.title,
+          title,
+          id: nanoid(),
           isDone: false,
         }
-        state[action.payload.todolistId].unshift(newTask)
+        return { payload: { newTask, todolistId } }
+      },
+      (state, action) => {
+        state[action.payload.todolistId].unshift(action.payload.newTask)
       },
     ),
   }),
-  extraReducers: (builder) => {
-    builder
-      .addCase(createTodolistTC.fulfilled, (state, action) => {
-        state[action.payload.todolist.item.id] = []
-      })
-      .addCase(deleteTodolistTC.fulfilled, (state, action) => {
-        delete state[action.payload.id]
-      })
-  },
 })
 
-export const { createTaskAC, deleteTaskAC, changeTaskTitleAC, changeTaskStatusAC } = tasksSlice.actions
-export const tasksReducer = tasksSlice.reducer
+export const createTaskAC = createAction<{ todolistId: string; title: string }>("tasks/createTask")
+export const tasksReducerooooo = createReducer(initialState, (builder) => {
+  builder
+    .addCase(createTodolistAC, (state, action) => {
+      state[action.payload.id] = []
+    })
+    .addCase(deleteTodolistAC, (state, action) => {
+      delete state[action.payload.id]
+    })
+})
+
+export const {} = tasksSlice.actions
 export const { selectTasks } = tasksSlice.selectors
+export const tasksReducer = tasksSlice.reducer
