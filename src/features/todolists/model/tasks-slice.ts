@@ -36,7 +36,7 @@ export const tasksSlice = createSlice({
       }
     }),
     createTaskAC: create.preparedReducer(
-      ({ title, todolistId }: { title: string; todolistId: string; taskId: string }) => ({
+      ({ title, todolistId }: { title: string; todolistId: string }) => ({
         payload: { title, todolistId, id: nanoid() },
       }),
       (state, action) => {
@@ -56,6 +56,8 @@ export const tasksSlice = createSlice({
       })
   },
 })
+
+
 
 export const { createTaskAC, changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC } = tasksSlice.actions
 export const { selectTasks } = tasksSlice.selectors
